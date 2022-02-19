@@ -1,8 +1,7 @@
-from enum import unique
-from itsdangerous import json
 from app import app,db
-from flask import Response, render_template, request
+from flask import Response, render_template, request, json, redirect, flash
 from app.models import User, Course, Enroll
+from app.form import LoginForm, RegisterForm
 
 courseData=[
         {"courseID":"1111","title":"PHP 101","description":"Intro to PHP","credits":3,"term":"Fall, Spring"}, 
@@ -17,9 +16,16 @@ courseData=[
 def index():
     return render_template("index.html", index=True)
 
-@app.route("/login")
+@app.route("/login", methods=['GET','POST'])
 def login():
-    return render_template("login.html", login=True)
+    form = LoginForm()
+    if form.validate_on_submit():
+        if request.form.get("email") == "test@email.com":
+            flash("login successful", "success")
+            return redirect("/index")
+        else:
+            flash("sorry, something went wrong", "danger")
+    return render_template("login.html", user_form=form, login=True)
 
 @app.route("/courses")
 @app.route("/courses/<term>")
