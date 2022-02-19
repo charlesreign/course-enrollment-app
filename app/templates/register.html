@@ -5,17 +5,39 @@
     <h2>New User Registration</h2>
 
     <div class="container">
-        <form name="register" action="register.php" method="get">
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required>
-            <br>
-            <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" required>
-            <br>
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-            <br class="clear">
-            <input class="btn-submit" type="submit" name="submit">
+
+        <form name="register" action="" method="post">
+
+            {{ register_form.hidden_tag() }}
+
+            <p>
+                {{ register_form.email.label }}
+                {{ register_form.email(size=35) }}
+            </p>
+
+            <p>
+                {{ register_form.password.label }}
+                {{ register_form.password(size=15) }}
+            </p>
+
+            <p>
+                {{ register_form.password_confirm.label }}
+                {{ register_form.password_confirm(size=15) }}
+            </p>
+
+            <p>
+                {{ register_form.first_name.label }}
+                {{ register_form.first_name(size=15) }}
+            </p>
+
+            <p>
+                {{ register_form.last_name.label }}
+                {{ register_form.last_name(size=15) }}
+            </p>
+
+            <p>
+                {{ register_form.submit() }}
+            </p>
         </form>
     </div>
     {% endblock %}

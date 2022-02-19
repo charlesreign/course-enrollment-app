@@ -1,4 +1,3 @@
-from enum import unique
 import flask
 from app import db
 
