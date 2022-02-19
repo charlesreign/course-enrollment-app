@@ -1,6 +1,8 @@
+from enum import unique
 from itsdangerous import json
-from app import app
+from app import app,db
 from flask import Response, render_template, request
+from app.models import User, Course, Enroll
 
 courseData=[
         {"courseID":"1111","title":"PHP 101","description":"Intro to PHP","credits":3,"term":"Fall, Spring"}, 
@@ -44,3 +46,12 @@ def api (idx=None):
     else:
         jdata = courseData[int(idx)]
     return Response(json.dumps(jdata), mimetype="application/json")
+
+
+@app.route("/user")
+def user():
+    '''This saves data into data table of the database'''
+    # User(user_id=1, first_name="John", last_name="Doe", email="john.doe@email.com", password="abc123").save()
+    # User(user_id=2, first_name="Jane", last_name="Doe", email="jane.doe@email.com", password="password123").save()
+    users = User.objects.all()
+    return render_template("user.html", users=users)
