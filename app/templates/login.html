@@ -8,20 +8,14 @@
             <form name="login" action="" method="post">
 
                 {{ user_form.hidden_tag() }}
-
-                <p>
-                    {{ user_form.email.label }}
-                    {{ user_form.email(size=35) }}
-                </p>
-
-                <p>
-                    {{ user_form.password.label }}
-                    {{ user_form.password(size=15) }}
-                </p>
-
-                <p>
-                    {{ user_form.submit() }}
-                </p>
+                <br>
+                {{ user_form.email.label }}
+                {{ user_form.email(size=35) }}
+                <br>
+                {{ user_form.password.label }}
+                {{ user_form.password(size=15) }}
+                <br>
+                {{ user_form.submit() }}
             </form>
         </div>
     </div>

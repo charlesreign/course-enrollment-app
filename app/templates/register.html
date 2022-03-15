@@ -8,36 +8,26 @@
 
         <form name="register" action="" method="post">
 
-            {{ register_form.hidden_tag() }}
+        {{ register_form.hidden_tag() }}
 
-            <p>
-                {{ register_form.email.label }}
-                {{ register_form.email(size=35) }}
-            </p>
+        {{ register_form.email.label }}
+        {{ register_form.email(size=35) }}
+        <br>
+        {{ register_form.password.label }}
+        {{ register_form.password(size=15) }}
+        <br>
+        {{ register_form.password_confirm.label }}
+        {{ register_form.password_confirm(size=15) }}
+        <br>
+        {{ register_form.first_name.label }}
+        {{ register_form.first_name(size=15) }}
+        <br>
+        {{ register_form.last_name.label }}
+        {{ register_form.last_name(size=15) }}
+        <br>
+        {{ register_form.submit() }}
+        
 
-            <p>
-                {{ register_form.password.label }}
-                {{ register_form.password(size=15) }}
-            </p>
-
-            <p>
-                {{ register_form.password_confirm.label }}
-                {{ register_form.password_confirm(size=15) }}
-            </p>
-
-            <p>
-                {{ register_form.first_name.label }}
-                {{ register_form.first_name(size=15) }}
-            </p>
-
-            <p>
-                {{ register_form.last_name.label }}
-                {{ register_form.last_name(size=15) }}
-            </p>
-
-            <p>
-                {{ register_form.submit() }}
-            </p>
         </form>
     </div>
     {% endblock %}
