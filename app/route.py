@@ -1,6 +1,5 @@
-from turtle import title
 from app import app,db
-from flask import Response, render_template, request, json, redirect, flash, url_for
+from flask import Response, render_template, request, json, redirect, flash, url_for, session
 from app.models import User, Course, Enroll
 from app.form import LoginForm, RegisterForm
 
@@ -19,6 +18,8 @@ def index():
 
 @app.route("/login", methods=['GET','POST'])
 def login():
+    if session.get('username'):
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data
@@ -27,10 +28,18 @@ def login():
         user = User.objects(email=email).first()
         if user and user.get_password(password):
             flash(f"{user.first_name}, you are successfully logged in", "success")
+            session['user_id'] = user.user_id
+            session['username'] = user.first_name
             return redirect("/index")
         else:
             flash("sorry, something went wrong", "danger")
     return render_template("login.html", user_form=form, login=True)
+
+@app.route('/logout')
+def logout():
+    session['user_id'] = False
+    session.pop('username',None)
+    return redirect(url_for('index'))
 
 @app.route("/courses")
 @app.route("/courses/<term>")
@@ -42,6 +51,8 @@ def courses(term = None):
 
 @app.route("/register" , methods=['GET','POST'])
 def register():
+    if session.get('username'):
+        return redirect(url_for('index'))
     form = RegisterForm()
     if form.validate_on_submit():
         user_id = User.objects().count()
@@ -60,9 +71,12 @@ def register():
 
 @app.route("/enrollment", methods=["GET","POST"])
 def enrollment():
+    if not session.get('username'):
+        return redirect(url_for('login'))
+
     courseID = request.form.get('courseID')
     courseTitle = request.form.get('title')
-    user_id = 1
+    user_id = session.get('user_id')
     if courseID:
         if Enroll.objects(user_id=user_id, course_id=courseID):
             flash(f'Oops! You are already registered in this course {courseTitle}!', "danger")
